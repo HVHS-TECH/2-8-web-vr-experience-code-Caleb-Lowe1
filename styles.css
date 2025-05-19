@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 .startscreen {
+=======
+body {
+>>>>>>> 567a4d3 (test save)
   margin: 0;
   padding: 0;
   background: url('background-for-homescreen.png') no-repeat center top;
@@ -8,6 +12,7 @@
   text-align: center;
 }
 
+<<<<<<< HEAD
 .creditsscreen {
   margin: 0;
   padding: 0;
@@ -22,11 +27,16 @@
 
 h1 {
   margin-top: 180px; 
+=======
+h1 {
+  margin-top: 180px; /* move title down */
+>>>>>>> 567a4d3 (test save)
   color: white;
   font-size: 36px;
   text-shadow: 2px 2px 5px black;
 }
 
+<<<<<<< HEAD
 
 .titletextthing {
 top: 150px;
@@ -61,13 +71,24 @@ scale: 3;
   top: 450px;
   left: 21%;
   scale: 1.1;
+=======
+.instructions {
+  top: 30px;
+  left: 20%;
+>>>>>>> 567a4d3 (test save)
   position: absolute;
 }
 
 .play {
+<<<<<<< HEAD
   top: 520px;
   left: 49%;
   scale: 3;
+=======
+  top: 500px;
+  left: 50%;
+  
+>>>>>>> 567a4d3 (test save)
   position: absolute;
 }
 
