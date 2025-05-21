@@ -38,10 +38,10 @@ position: absolute;
 
 
 .creditsbutton {
-top: 450px;
-left: 73.5%;
+top: 58%;
+  left: 75%;
 position: absolute; 
-scale:1.1 ;  
+scale:1.5 ;  
 }
 
 .credits {
@@ -58,15 +58,30 @@ scale: 3;
 }
 
 .instructionsbutton {
-  top: 450px;
-  left: 21%;
-  scale: 1.1;
+  top: 58%;
+  left: 23%;
+  scale: 1.5;
   position: absolute;
 }
 
 .play {
-  top: 520px;
+  top: 70%;
   left: 49%;
-  scale: 3;
-  position: absolute;
+ position: absolute;
+ scale: 3;
+}
+
+@media (min-width: 768px) {
+  .play {
+    top: 70%;
+  }
+
+  .instructionsbutton {
+    top: 60%;
+  }
+
+  
+  .creditsbutton {
+    top: 60%;
+  }
 }
