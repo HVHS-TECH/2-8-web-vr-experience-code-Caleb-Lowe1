@@ -4,6 +4,7 @@
   background: url('background-for-homescreen.png') no-repeat center top;
   background-size: cover;
   height: 100vh;
+  background-attachment: fixed;
   font-family: Arial, sans-serif;
   text-align: center;
 }
@@ -38,50 +39,37 @@ position: absolute;
 
 
 .creditsbutton {
-top: 58%;
-  left: 75%;
-position: absolute; 
+top: 550px;
+left: 75%;
 scale:1.5 ;  
+position: absolute; 
 }
 
 .credits {
-top: 460px;
+top: 590px;
 position: absolute;
 left: 45%;
 }
 
 .Backbutton {
-top: 100px;
+top: 130px;
 position: absolute;
 left: 6%;
 scale: 3;
 }
 
 .instructionsbutton {
-  top: 58%;
+  top: 550px;
   left: 23%;
   scale: 1.5;
   position: absolute;
 }
 
 .play {
-  top: 70%;
+  top: 500px;
   left: 49%;
  position: absolute;
  scale: 3;
 }
 
-@media (min-width: 768px) {
-  .play {
-    top: 70%;
-  }
 
-  .instructionsbutton {
-    top: 60%;
-  }
-
-  
-  .creditsbutton {
-    top: 60%;
-  }
-}
