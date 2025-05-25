@@ -23,6 +23,16 @@ body {
 }
 
 
+.instructionsscreen {
+  margin: 0;
+  padding: 0;
+  background: url('Instructions screen.png') no-repeat center top;
+  background-size: cover;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
 .creditsbutton {
   top: 59%;
   left: 73%;
