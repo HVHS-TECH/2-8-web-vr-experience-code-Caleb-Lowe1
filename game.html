@@ -1,64 +1,122 @@
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
-    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-    <script src="https://rawgit.com/donmccurdy/aframe-extras/v2.1.1/dist/aframe-extras.loaders.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
 
-      <!-- Ground and platforms -->
-        <a-box position="0 0 -5" width="20" height="1" depth="20" color="blue"></a-box>
-      <a-box position="3 1 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
-      <a-box position="7 3.5 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
-      <a-box position="11 5 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
+<head>
+  <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+  <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://rawgit.com/donmccurdy/aframe-extras/v2.1.1/dist/aframe-extras.loaders.min.js"></script>
+</head>
 
-      <!-- Sky -->
+<body>
+  <a-scene>
+
+    <!-- Ground and platforms -->
+    <a-box class="floor" position="0 0 -5" width="400" height="1" depth="400" color="blue"></a-box>
+    <a-box class="platform" position="3 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="7 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="11 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="15 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="17 21 1" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="11 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+
+
+
+
+    <a-entity id="rig" position="3 21.6 -5" movement-controls="speed:0.5;">
+      <a-entity camera id="camera" position="0 0 0" look-controls="pointerLockEnabled:false"
+        extended-wasd-controls="flyEnabled: false; turnEnabled:true; lookEnabled:true; maxLookAngle: 60;">
+      </a-entity>
+    </a-entity>
+
+    <script>
+      const rig = document.querySelector('#rig');
+      var velocityY = 0;
+      const gravity = -0.015;
+      var onGround = true;
+      const keys = {};
+      const playerHeight = 1.6; // Height from ground to player's feet
+      const playerHeadHeight = 0.4; // height from feet to head
+      const platforms = document.querySelectorAll('.platform');
       
 
-      <a-entity id="rig" position="0 1 0" movement-controls="speed:0.5;">
-        <a-entity camera id="camera" position="0 1 0" look-controls="pointerLockEnabled:false" 
-          extended-wasd-controls="flyEnabled: false; turnEnabled:true; lookEnabled:true; maxLookAngle: 60;">
-        </a-entity>
-      </a-entity>
+      window.addEventListener('keydown', e => keys[e.code] = true);
+      window.addEventListener('keyup', e => keys[e.code] = false);
 
-      <script>
-        const rig = document.querySelector('#rig');
-        var velocityY = 0;
-        const gravity = -0.015; //Whenever I have gravity too high it makes the jump look buggy which is why its set so low
-        var onGround = true;
-        const keys = {};
+      
+      //function fall(pos) {
+      //if (pos.y <= 3) {window.location.href = '.html';}
+      //};
 
-        window.addEventListener('keydown', e => keys[e.code] = true);
-        window.addEventListener('keyup', e => keys[e.code] = false);
 
-        function gameLoop() {
-          let pos = rig.getAttribute('position'); //this gets the current position
+      function checkPlatformCollision(pos) {
+        let newOnGround = false;
 
-          //if the player is on the ground and presses the space button then the player jumps and onGround is set to false so the player can’t jump until they land again
-          if (keys['Space'] && velocityY == 0) {
-            velocityY = 0.3;
-            onGround = false;
+        platforms.forEach(platform => {
+          const PlatformPosition = platform.getAttribute('position');
+          const platformSize = platform.getAttribute('width') / 2;
+          const platformDepth = platform.getAttribute('depth') / 2;
+          const platformHeight = platform.getAttribute('height');
+
+          if (pos.x >= PlatformPosition.x - platformSize && 
+            pos.x <= PlatformPosition.x + platformSize &&
+            pos.z >= PlatformPosition.z - platformDepth &&
+            pos.z <= PlatformPosition.z + platformDepth) { 
+
+            const platformTop = PlatformPosition.y + (platformHeight / 2); //If the player is touching a new platform then the y position of the platform is set in the middle of the platforms height  
+              
+
+            if (pos.y - playerHeadHeight <= platformTop &&
+              pos.y - playerHeadHeight + velocityY <= platformTop &&
+              pos.y - playerHeadHeight > PlatformPosition.y - (platformHeight / 2)) {
+
+              pos.y = platformTop + playerHeadHeight; //the pos (position of the player) is the top of the platform + the total height of the player (length of player from bottom to top + how high the player is above the ground)
+              velocityY = 0;
+              newOnGround = true;
+            }
+
+            else if (pos.y - playerHeadHeight < PlatformPosition.y - (platformHeight / 2) && //if the player hits under the platform they collide
+              pos.y + velocityY >= PlatformPosition.y - (platformHeight / 2)) {
+              pos.y = PlatformPosition.y - (platformHeight / 2) - 0.1;
+              velocityY = 0;
+            }
           }
+        });
 
-          //makes it so that the gravity pulls down the player.
-          velocityY = velocityY + gravity; 
-          //sets players position
-          pos.y = pos.y + velocityY;
+        onGround = newOnGround;
+        return pos;
+      }
 
-          if (pos.y <= 1.6) {
-            pos.y = 1.6;
-            velocityY = 0;
-            onGround = true;
-          }
 
-          rig.setAttribute('position', pos);
-          requestAnimationFrame(gameLoop);
+      function jumpLoop() {
+        let pos = rig.getAttribute('position'); //pos = player position
+
+        if (keys['Space'] && onGround) {     //if the player presses space while being on the ground it allows them to jump
+          velocityY = 0.3;
+          onGround = false;
         }
 
-        gameLoop();
-      </script>
-    </a-scene>
-  </body>
+        velocityY = velocityY + gravity; //adjusts velocity based on gravity
+        pos.y = pos.y + velocityY; //moves the player to where they should be
+
+        onGround = false; // Reset onGround before collision checks
+
+        // checkFloorcollision call removed
+        pos = checkPlatformCollision(pos);
+        fall(pos);
+        if (pos.y <= playerHeight) {
+          pos.y = playerHeight;
+          velocityY = 0;
+          onGround = true;
+        } //if the player goes under "playerHeight" then it sets it make so that it can't go under ground
+
+        rig.setAttribute('position', pos); //sets players position
+        requestAnimationFrame(jumpLoop); //repeats on the next frame
+      }
+
+
+      jumpLoop();
+    </script>
+  </a-scene>
+</body>
+
 </html>
