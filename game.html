@@ -37,12 +37,12 @@
       const playerHeight = 1.6; // Height from ground to player's feet
       const playerHeadHeight = 0.4; // height from feet to head
       const platforms = document.querySelectorAll('.platform');
-      
+
 
       window.addEventListener('keydown', e => keys[e.code] = true);
       window.addEventListener('keyup', e => keys[e.code] = false);
 
-      
+
       //function fall(pos) {
       //if (pos.y <= 3) {window.location.href = '.html';}
       //};
@@ -57,13 +57,13 @@
           const platformDepth = platform.getAttribute('depth') / 2;
           const platformHeight = platform.getAttribute('height');
 
-          if (pos.x >= PlatformPosition.x - platformSize && 
+          if (pos.x >= PlatformPosition.x - platformSize &&
             pos.x <= PlatformPosition.x + platformSize &&
             pos.z >= PlatformPosition.z - platformDepth &&
-            pos.z <= PlatformPosition.z + platformDepth) { 
+            pos.z <= PlatformPosition.z + platformDepth) {
 
             const platformTop = PlatformPosition.y + (platformHeight / 2); //If the player is touching a new platform then the y position of the platform is set in the middle of the platforms height  
-              
+
 
             if (pos.y - playerHeadHeight <= platformTop &&
               pos.y - playerHeadHeight + velocityY <= platformTop &&
