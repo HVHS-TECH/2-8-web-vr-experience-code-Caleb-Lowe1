@@ -1,16 +1,64 @@
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Game Screen</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+  <head>
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/v2.1.1/dist/aframe-extras.loaders.min.js"></script>
   </head>
- 
   <body>
     <a-scene>
+
+      <!-- Ground and platforms -->
+        <a-box position="0 0 -5" width="20" height="1" depth="20" color="blue"></a-box>
+      <a-box position="3 1 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
+      <a-box position="7 3.5 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
+      <a-box position="11 5 -5" width="3" height="0.5" depth="3" color="blue"></a-box>
+
+      <!-- Sky -->
       
+
+      <a-entity id="rig" position="0 1 0" movement-controls="speed:0.5;">
+        <a-entity camera id="camera" position="0 1 0" look-controls="pointerLockEnabled:false" 
+          extended-wasd-controls="flyEnabled: false; turnEnabled:true; lookEnabled:true; maxLookAngle: 60;">
+        </a-entity>
+      </a-entity>
+
+      <script>
+        const rig = document.querySelector('#rig');
+        var velocityY = 0;
+        const gravity = -0.015; //Whenever I have gravity too high it makes the jump look buggy which is why its set so low
+        var onGround = true;
+        const keys = {};
+
+        window.addEventListener('keydown', e => keys[e.code] = true);
+        window.addEventListener('keyup', e => keys[e.code] = false);
+
+        function gameLoop() {
+          let pos = rig.getAttribute('position'); //this gets the current position
+
+          //if the player is on the ground and presses the space button then the player jumps and onGround is set to false so the player can’t jump until they land again
+          if (keys['Space'] && velocityY == 0) {
+            velocityY = 0.3;
+            onGround = false;
+          }
+
+          //makes it so that the gravity pulls down the player.
+          velocityY = velocityY + gravity; 
+          //sets players position
+          pos.y = pos.y + velocityY;
+
+          if (pos.y <= 1.6) {
+            pos.y = 1.6;
+            velocityY = 0;
+            onGround = true;
+          }
+
+          rig.setAttribute('position', pos);
+          requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+      </script>
     </a-scene>
   </body>
+</html>
