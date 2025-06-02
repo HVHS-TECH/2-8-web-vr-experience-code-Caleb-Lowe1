@@ -43,9 +43,15 @@
       window.addEventListener('keyup', e => keys[e.code] = false);
 
 
-      //function fall(pos) {
-      //if (pos.y <= 3) {window.location.href = '.html';}
-      //};
+      function fall(pos) {
+      if (pos.y <= 3) {
+        velocityY = 0;
+        pos.y = pos.y + velocityY + 4; //stops the player mid air and moves them up 4 
+        //(this is so that the screen doesn't start bugging out since if they at y <= 3 
+         //then it continuously tries to send the player to the end screen every single frame)
+        window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
+      }
+      };
 
 
       function checkPlatformCollision(pos) {
@@ -62,8 +68,8 @@
             pos.z >= PlatformPosition.z - platformDepth &&
             pos.z <= PlatformPosition.z + platformDepth) {
 
-            const platformTop = PlatformPosition.y + (platformHeight / 2); //If the player is touching a new platform then the y position of the platform is set in the middle of the platforms height  
-
+            const platformTop = PlatformPosition.y + (platformHeight / 2); //If the player is touching a new platform (standing on top of it) then the y position of the top platform is set to the platforms position + half of the platforms height    
+            
 
             if (pos.y - playerHeadHeight <= platformTop &&
               pos.y - playerHeadHeight + velocityY <= platformTop &&
@@ -73,13 +79,15 @@
               velocityY = 0;
               newOnGround = true;
             }
+            else {newOnGround = false;}
 
-            else if (pos.y - playerHeadHeight < PlatformPosition.y - (platformHeight / 2) && //if the player hits under the platform they collide
+             if (pos.y - playerHeadHeight < PlatformPosition.y - (platformHeight / 2) && //if the player hits under the platform they collide
               pos.y + velocityY >= PlatformPosition.y - (platformHeight / 2)) {
               pos.y = PlatformPosition.y - (platformHeight / 2) - 0.1;
               velocityY = 0;
             }
           }
+        
         });
 
         onGround = newOnGround;
@@ -89,12 +97,12 @@
 
       function jumpLoop() {
         let pos = rig.getAttribute('position'); //pos = player position
-
+        console.log(pos.z)
         if (keys['Space'] && onGround) {     //if the player presses space while being on the ground it allows them to jump
           velocityY = 0.3;
           onGround = false;
         }
-
+        if (onGround == true && pos.z >= -3) {console.log ("hello")};
         velocityY = velocityY + gravity; //adjusts velocity based on gravity
         pos.y = pos.y + velocityY; //moves the player to where they should be
 
