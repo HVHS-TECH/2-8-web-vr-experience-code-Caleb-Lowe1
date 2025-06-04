@@ -23,6 +23,10 @@ body {
 }
 
 .controlstitle {
+  top: 35%;
+  left: 75%;
+  transform: scale(2);
+  position: absolute;
 
 
   
@@ -83,6 +87,17 @@ body {
 }
 
 
+.aim-of-the-gametitle {
+  top: 32%;
+  left: 19.5%;
+  transform: scale(1.4);
+  position: absolute;
+
+
+  
+}
+
+
 .creditstitle {
     top: 35%;
     left: 49%;
@@ -136,5 +151,24 @@ h1 {
     left: 49%;
     position: absolute;
     transform: scale(2);
+}
+.controlstitle {
+  top: 32%;
+  left: 77%;
+  transform: scale(2);
+  position: absolute;
+
+
+  
+}
+
+.aim-of-the-gametitle {
+  top: 32%;
+  left: 18%;
+  transform: scale(1.4);
+  position: absolute;
+
+
+  
 }
 }

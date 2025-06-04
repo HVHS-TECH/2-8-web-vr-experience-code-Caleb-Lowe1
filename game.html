@@ -12,7 +12,7 @@
 
     <!-- Ground and platforms -->
     <a-box class="floor" position="0 0 -5" width="400" height="1" depth="400" color="blue"></a-box>
-    <a-box class="platform" position="3 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="3 20 -5" width="3" height="5" depth="3" color="black"></a-box>
     <a-box class="platform" position="7 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
     <a-box class="platform" position="11 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
     <a-box class="platform" position="15 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
@@ -44,9 +44,9 @@
 
 
       function fall(pos) {
-      if (pos.y <= 3) {
+      if (pos.y <= 18) {
         velocityY = 0;
-        pos.y = pos.y + velocityY + 4; //stops the player mid air and moves them up 4 
+        pos.y = pos.y - pos.y + 19; //stops the player mid air and moves them up 4 
         //(this is so that the screen doesn't start bugging out since if they at y <= 3 
          //then it continuously tries to send the player to the end screen every single frame)
         window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
@@ -73,7 +73,8 @@
 
             if (pos.y - playerHeadHeight <= platformTop &&
               pos.y - playerHeadHeight + velocityY <= platformTop &&
-              pos.y - playerHeadHeight > PlatformPosition.y - (platformHeight / 2)) {
+              pos.y - playerHeadHeight > PlatformPosition.y - (platformHeight / 2)
+              ) {
 
               pos.y = platformTop + playerHeadHeight; //the pos (position of the player) is the top of the platform + the total height of the player (length of player from bottom to top + how high the player is above the ground)
               velocityY = 0;
