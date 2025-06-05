@@ -12,11 +12,11 @@
 
     <!-- Ground and platforms -->
     <a-box class="floor" position="0 0 -5" width="400" height="1" depth="400" color="blue"></a-box>
-    <a-box class="platform" position="3 20 -5" width="3" height="5" depth="3" color="black"></a-box>
-    <a-box class="platform" position="7 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
-    <a-box class="platform" position="11 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
-    <a-box class="platform" position="15 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
-    <a-box class="platform" position="17 21 1" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="3 10 -5" width="3" height="20" depth="3" color="black"></a-box>
+    <a-box class="platform" position="9 11 -5" width="3" height="20" depth="3" color="black"></a-box>
+    <a-box class="platform" position="13 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="17 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
+    <a-box class="platform" position="20 21 1" width="3" height="0.5" depth="3" color="black"></a-box>
     <a-box class="platform" position="11 20 -5" width="3" height="0.5" depth="3" color="black"></a-box>
 
 
@@ -44,13 +44,14 @@
 
 
       function fall(pos) {
-      if (pos.y <= 18) {
-        velocityY = 0;
-        pos.y = pos.y - pos.y + 19; //stops the player mid air and moves them up 4 
-        //(this is so that the screen doesn't start bugging out since if they at y <= 3 
-         //then it continuously tries to send the player to the end screen every single frame)
-        window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
-      }
+        if (pos.y <= 18) {
+          pos.y = (pos.y - pos.y) + 20; //stops the player mid air and moves them up 20 
+          //(this is so that the screen doesn't start bugging out since if they are at y <= 3 
+          //then it continuously tries to send the player to the end screen every single frame)
+          gravity = 0;
+          window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
+
+        }
       };
 
 
@@ -69,26 +70,30 @@
             pos.z <= PlatformPosition.z + platformDepth) {
 
             const platformTop = PlatformPosition.y + (platformHeight / 2); //If the player is touching a new platform (standing on top of it) then the y position of the top platform is set to the platforms position + half of the platforms height    
-            
 
-            if (pos.y - playerHeadHeight <= platformTop &&
+
+            if (pos.y - playerHeadHeight <= platformTop && pos.y - playerHeadHeight >= (platformTop - 1.4) &&
               pos.y - playerHeadHeight + velocityY <= platformTop &&
               pos.y - playerHeadHeight > PlatformPosition.y - (platformHeight / 2)
-              ) {
+
+            ) {
 
               pos.y = platformTop + playerHeadHeight; //the pos (position of the player) is the top of the platform + the total height of the player (length of player from bottom to top + how high the player is above the ground)
               velocityY = 0;
               newOnGround = true;
             }
-            else {newOnGround = false;}
+            else {
+              newOnGround = false;
 
-             if (pos.y - playerHeadHeight < PlatformPosition.y - (platformHeight / 2) && //if the player hits under the platform they collide
+            }
+
+            if (pos.y - playerHeadHeight < PlatformPosition.y - (platformHeight / 2) && //if the player hits under the platform they collide
               pos.y + velocityY >= PlatformPosition.y - (platformHeight / 2)) {
               pos.y = PlatformPosition.y - (platformHeight / 2) - 0.1;
               velocityY = 0;
             }
           }
-        
+
         });
 
         onGround = newOnGround;
@@ -103,7 +108,7 @@
           velocityY = 0.3;
           onGround = false;
         }
-        if (onGround == true && pos.z >= -3) {console.log ("hello")};
+        if (onGround == true && pos.z >= -3) { console.log("hello") };
         velocityY = velocityY + gravity; //adjusts velocity based on gravity
         pos.y = pos.y + velocityY; //moves the player to where they should be
 
