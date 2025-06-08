@@ -22,7 +22,7 @@
 
 
 
-    <a-entity id="rig" position="3 21.6 -5" movement-controls="speed:0.5;">
+    <a-entity id="rig" position="3 21.6 -5" movement-controls="speed:0.5;" rotation="0 270 0">
       <a-entity camera id="camera" position="0 0 0" look-controls="pointerLockEnabled:false"
         extended-wasd-controls="flyEnabled: false; turnEnabled:true; lookEnabled:true; maxLookAngle: 60;">
       </a-entity>
@@ -31,7 +31,7 @@
     <script>
       const rig = document.querySelector('#rig');
       var velocityY = 0;
-      const gravity = -0.015;
+      var gravity = -0.015;
       var onGround = true;
       const keys = {};
       const playerHeight = 1.6; // Height from ground to player's feet
@@ -45,10 +45,13 @@
 
       function fall(pos) {
         if (pos.y <= 18) {
-          pos.y = (pos.y - pos.y) + 20; //stops the player mid air and moves them up 20 
-          //(this is so that the screen doesn't start bugging out since if they are at y <= 3 
-          //then it continuously tries to send the player to the end screen every single frame)
           gravity = 0;
+          velocityY = 0;
+          pos.y = (pos.y - pos.y) + 20; //stops the player mid air and moves them up 20 
+          //(this is so that the screen doesn't start bugging out since if they are at y <= 20 
+          //then it continuously tries to send the player to the end screen every single frame)
+          
+        
           window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
 
         }
