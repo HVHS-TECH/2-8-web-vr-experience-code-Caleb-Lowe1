@@ -32,6 +32,15 @@ body {
   
 }
 
+button {
+border-radius: 5px; 
+background-color: #60d7f0;
+}
+
+button:hover {
+background-color: #53b5c9;
+border-radius: 5px;
+}
 
 .instructionsscreen {
   margin: 0;
@@ -74,14 +83,14 @@ body {
 
 .instructionsbutton {
   top: 59%;
-  left: 21%;
+  left: 21.3%;
   transform: scale(1.2);
   position: absolute;
 }
 
 .play {
   top: 70%;
-  left: 50%;
+  left: 49%;
   position: absolute;
   transform: scale(3);
 }
