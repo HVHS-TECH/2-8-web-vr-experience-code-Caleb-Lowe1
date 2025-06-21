@@ -70,14 +70,14 @@ border-radius: 5px;
 
 
 .credits {
-  top: 76%;
+  top: 63%;
   position: absolute;
   left: 45%;
 }
 
 .Backbutton {
-  top: 12%;
-  left: 5%;
+  top: 14%;
+  left: 6%;
   transform: scale(2);
   position: absolute;
 }
@@ -108,14 +108,14 @@ border-radius: 5px;
 }
 
 .controls{
-  top:68%;
-  left:75%;
+  top:65%;
+  left:74%;
   position: absolute;
 }
 
 .creditstitle {
     top: 35%;
-    left: 49%;
+    left: 48%;
     position: absolute;
     transform: scale(2);
 }
@@ -150,20 +150,20 @@ h1 {
   }
 
   .Backbutton {
-  top: 11%;
-  left: 4%;
+  top: 12%;
+  left: 5%;
   transform: scale(2);
   position: absolute;
 }
 
 .credits {
-  top: 66%;
+  top: 54%;
   position: absolute;
   left: 45%;
 }
 .creditstitle {
     top: 30%;
-    left: 49%;
+    left: 48%;
     position: absolute;
     transform: scale(2);
 }
@@ -185,7 +185,7 @@ h1 {
 }
 .controls{
   top:60%;
-  left:77%;
+  left:76%;
   position: absolute;
 }
   
