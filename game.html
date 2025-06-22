@@ -19,9 +19,9 @@
     <a-box class="platform" position="24 10 -5" width="3" height="20" depth="3" color="#4d4b4b"></a-box>
     <a-box class="platform" position="20 10.5 5.5" width="3" height="20" depth="3" color="#4d4b4b"></a-box>
     <a-box class="platform" position="14 10 9" width="3" height="20" depth="3" color="#4d4b4b"></a-box>
-    <a-box class="platform" position="7 10 10" width="3" height="20" depth="3" color="#4d4b4b"></a-box>
+    <a-box class="platform" position="7 10 10" width="3" height="20" depth="3" color="yellow"></a-box>
     
-    
+    <a-sky color = "#87CEEB"></a-sky>
     <a-entity id="rig" position="0 21.6 -5" movement-controls="speed:0.5;" rotation="0 270 0">
       <a-entity camera id="camera" position="0 0 0" look-controls="pointerLockEnabled:false"
         extended-wasd-controls="flyEnabled: false; turnEnabled:true; lookEnabled:true; maxLookAngle: 60;">
@@ -52,11 +52,22 @@
           //(this is so that the screen doesn't start bugging out since if they are at y <= 20 
           //then it continuously tries to send the player to the end screen every single frame)
           
-        
-          window.location.href = 'index.html'; //index.html is a placeholder, will be replaced with the end screen page.
+          
+
+
+          window.location.href = 'lose.html'; 
 
         }
       };
+
+      function win(pos) {
+        if (onGround == true && pos.z >= 6 && pos.x <= 10) {
+          gravity = 0;
+          velocityY = 0;
+          pos.y = (pos.y - pos.y) + 25;
+        window.location.href = 'win.html';
+        }
+        };
 
 
       function checkPlatformCollision(pos) {
@@ -112,7 +123,8 @@
           velocityY = 0.3;
           onGround = false;
         }
-        if (onGround == true && pos.z >= -3) { console.log("hello") };
+        console.log(pos.z)
+        
         velocityY = velocityY + gravity; //adjusts velocity based on gravity
         pos.y = pos.y + velocityY; //moves the player to where they should be
 
@@ -121,6 +133,7 @@
         // checkFloorcollision call removed
         pos = checkPlatformCollision(pos);
         fall(pos);
+        win(pos);
         if (pos.y <= playerHeight) {
           pos.y = playerHeight;
           velocityY = 0;
